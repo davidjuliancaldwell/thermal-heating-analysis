@@ -1,12 +1,15 @@
-function dataOut = importfile_infra(filename)
-
-% e.g. Sequencefile01 = convert_demo('Sequencefile_01.csv');
+function dataOut = importfile_infra(filename,wholeImage)
+% this is a function to convert a single .csv file that has been converted
+% in IRBIS software to an appropriate part of a data matrix for further
+% anaylsis in MATLAB. This function is called from the
+% convert_infratech_csv.m script 
 
 %% Open the text file.
 fileID = fopen(filename,'r');
 
 delimiter = ';';
-wholeImage = 1;
+wholeImage = 1; % select this if the entire image was exported from IRBIS 
+% otherwise, set this variable to 0 
 if wholeImage
     startRow = 9;
     

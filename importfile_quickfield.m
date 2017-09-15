@@ -1,6 +1,8 @@
 function [xx,yy,T_grid,x,y,T] = importfile_quickfield(filename)
-
+% DJC - BLBT Summer Exchange 2017. This is a function to convert a 
+% quickfield heating simulation file to one that can be analyzed in matlab
 % e.g. Sequencefile01 = convert_demo('Sequencefile_01.csv');
+
 
 %% Open the text file.
 fileID = fopen(filename,'r');

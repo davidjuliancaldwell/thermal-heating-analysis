@@ -1,10 +1,19 @@
-% 7-14-2017 - script to analyze heating profile in the thermal camera
-% imaging data
+%% 7-14-2017 - DJC script to analyze heating profile in the thermal camera
+% This is a script to use when trying to average along signals that are
+% roughly correlated in time. Using cross correlation they can be
+% re-aligned, but that takes some tuning
 
 %% load file
+% here the workspace is cleared
+
 close all;clear all;clc
 
+% here the file is chosen for the following switch statement
+
 file = 1;
+plotIt = 1; % set this to 1 to plot the data 
+smoothIt = 0;
+
 switch file
     case 1
         xVals = [240:380];
@@ -95,9 +104,9 @@ switch file
         stackedDataSub = cat(4,stackedDataSub1, stackedDataSub2, stackedDataSub3(:,:,1:end-1));
 end
 %%
+% get the average across frames 
 stackedDataSubAverage = mean(stackedDataSub,4);
 
-smoothIt = 1;
 
 % 2d smoothing
 if smoothIt
@@ -110,10 +119,9 @@ if smoothIt
     stackedDataSubAverage = stackedDataSubAverage(2:end-1,2:end-1,:);
 end
 
-plotIt = 1;
 
 %% colorbrewer palatte
-
+% this is for visualization purposes 
 CT=cbrewer('seq', 'Blues', 8);
 colormap(CT)
 %% begin the analysis

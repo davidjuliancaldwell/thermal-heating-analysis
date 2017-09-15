@@ -21,9 +21,12 @@ files = dir([rawpath,'\*.csv']);
 
 ind = 1;
 %stackedData = zeros(480,640,Num); % this is if using entire screen oof caemra 
+% whole image - 480 x 640 pixels in each frame
+wholeImage = 1;
+
 for file = files'
     
-    data_single = importfile_infra(file.name);
+    data_single = importfile_infra(file.name,wholeImage);
     
     if ind == 1
        stackedData = zeros(size(data_single,1),size(data_single,2),Num); 

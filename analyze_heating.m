@@ -1,15 +1,18 @@
-% 7-14-2017 - script to analyze heating profile in the thermal camera
-% imaging data
-
+%% 7-14-2017 - DJC BLBT summer script to analyze heating from individual files
 %% load file
+% here the workspace is cleared
 close all;clear all;clc
 
+% here the file is chosen for the following switch statement
 file = 9;
+plotIt = 1; % set this to 1 to plot the data 
+smoothIt = 0;
 
+% switch statement to pick the file
 switch file
     case 1
         load('elec1.5d3.05p_fu_8.0mA_0001.mat'); % this was the one I started with
-        yVals = [250:370];
+        yVals = [250:370]; % defines the x and y ranges of interest to avoid selecting the whole image
         xVals = [130:295];
     case 2
         
@@ -38,7 +41,7 @@ switch file
         load('C:\david\david\11-8-2017\2nd_gel_flipped_betweenGrids\2ndGel_betweenGrids_5_8_run2_converted\2ndGel_betweenGrids_5_8_run2.mat')
         xVals = [240:380];
         yVals = [180:300];
-        % convert to centigrade
+        % convert to centigrade - SOMETIMES THINGS WERE IN KELVIN
         stackedData = stackedData - 273.15;
     case 8
         load('C:\david\david\11-8-2017\2nd_gel_flipped_betweenGrids\2ndGel_betweenGrids_5_8_run3_converted\2ndGel_betweenGrids_5_8_run3.mat')
@@ -46,7 +49,7 @@ switch file
         yVals = [180:300];
         % convert to centigrade
         stackedData = stackedData - 273.15;
-    case 9
+    case 9 % here multple files are loaded 
         xVals = [240:380];
         yVals = [180:300];
         load('C:\david\david\11-8-2017\2nd_gel_flipped_betweenGrids\2ndGel_betweenGrids_5_8_run1_converted\2ndGel_betweenGrids_5_8_run1.mat')
@@ -64,10 +67,7 @@ switch file
         
 end
 
-stackedDataSub = stackedData(xVals,yVals,:);
-
-
-smoothIt = 0;
+stackedDataSub = stackedData(xVals,yVals,:); % subselect the data
 
 % 2d smoothing
 if smoothIt
@@ -80,11 +80,10 @@ if smoothIt
     stackedDataSub = stackedDataSub(2:end-1,2:end-1,:);
 end
 
-plotIt = 1;
 
 %% begin the analysis
 
-% visualize
+% visualize it if plotIt is true
 if plotIt
     
     fig1 = figure;
@@ -109,8 +108,6 @@ if plotIt
 end
 %% look at subportion of thermal heating
 
-
-
 if plotIt
     
     fig2 = figure;
@@ -134,7 +131,7 @@ if plotIt
         
     end
 end
-%% 3D plot to look at everything
+%% 3D plot to get a different view. Different zlimits can be important 
 if plotIt
     
     fig3 = figure;
